@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "dependencies": {
+    "@fastify/compress": "^8.0.1",
     "abstract-logging": "^2.0.1",
     "ajv": "^8.17.1",
     "ajv-formats": "^3.0.1",
@@ -60,6 +61,7 @@
     "json-schema-ref-resolver": "^2.0.1",
     "json-schema-traverse": "^1.0.0",
     "light-my-request": "^6.6.0",
+    "lru-cache": "^11.1.0",
     "math-intrinsics": "^1.1.0",
     "mime-db": "^1.52.0",
     "mime-types": "^2.1.35",

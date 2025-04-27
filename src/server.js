@@ -3,8 +3,14 @@ require('dotenv').config();
 const Fastify = require('fastify');
 const proxyHandler = require('./proxy/proxyHandler');
 const metrics = require('./metrics/metrics');
+const compress = require('@fastify/compress');
 
 const app = Fastify();
+
+app.register(compress, {
+    global: true, // Compress all responses unless excluded
+    encodings: ['gzip', 'deflate', 'br'], // Gzip, Brotli, Deflate
+  });
 
 // Health Check
 app.get('/health', async (req, reply) => {
