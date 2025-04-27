@@ -7,6 +7,7 @@ const metrics = require('../metrics/metrics');
 const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
 // Retry Wrapper
+
 const sendRequestWithRetry = async (options, maxRetries = 3, baseDelay = 100) => {
   let attempt = 0;
 
@@ -43,12 +44,12 @@ exports.forwardRequest = async (request, reply) => {
     const start = Date.now();
 
     const response = await sendRequestWithRetry({
-      method: request.method,
-      url: externalUrl,
-      data: request.body,
-      headers: { ...request.headers },
-      timeout: config.requestTimeoutMs,
-    });
+        method: request.method,
+        url: externalUrl,
+        data: request.body,
+        headers: { ...request.headers },
+        timeout: config.requestTimeoutMs,
+      }, config.maxRetries, config.retryBaseDelayMs);
 
     const duration = Date.now() - start;
     metrics.recordRequest(duration, 200);
