@@ -6,7 +6,8 @@ const options = {
   ttl: 1000 * 60 * 5,         // 5 minutes TTL per item
 };
 
-const cache = new LRU(options);
+const { LRUCache } = require('lru-cache');
+const cache = new LRUCache(options);
 
 exports.get = (key) => {
   return cache.get(key);
