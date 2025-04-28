@@ -14,12 +14,34 @@ const requestCounter = new client.Counter({
   labelNames: ['status'],
 });
 
+const cacheHitCounter = new client.Counter({
+    name: 'api_proxy_cache_hit_total',
+    help: 'Total number of cache hits',
+  });
+  
+  // NEW: Cache MISS Counter
+  const cacheMissCounter = new client.Counter({
+    name: 'api_proxy_cache_miss_total',
+    help: 'Total number of cache misses',
+  });
+
 register.registerMetric(requestDuration);
 register.registerMetric(requestCounter);
+register.registerMetric(cacheHitCounter);
+register.registerMetric(cacheMissCounter);
 
 exports.recordRequest = (duration, statusCode) => {
   requestDuration.observe(duration / 1000);
   requestCounter.labels(statusCode.toString()).inc();
 };
 
+exports.recordCacheHit = () => {
+    cacheHitCounter.inc();
+  };
+  
+exports.recordCacheMiss = () => {
+    cacheMissCounter.inc();
+  };
+
+  
 exports.register = register;
